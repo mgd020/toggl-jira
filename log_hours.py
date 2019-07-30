@@ -1,15 +1,16 @@
+#!/usr/bin/env python
+
 import datetime
 import json
 import math
 import re
-from itertools import groupby, zip_longest
+from itertools import zip_longest
 
 import requests
-from jira import JIRA, JIRAError
+from jira import JIRA
 
 
 JIRA_KEY_PATTERN = re.compile(r"^(?P<key>[A-Z]{1,10}-\d+)\b")
-JIRA_WORKLOG_ID_PATTERN = re.compile(r"^jira-worklog-(?P<id>\d+)$")
 
 ROUND_SECONDS_TO = 30 * 60
 
