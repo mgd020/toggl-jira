@@ -103,12 +103,6 @@ for jira_key, time_entries in jira_key_time_entries.items():
     if not time_shortfall:
         continue
 
-    print("")
-    print(time_entries[0]["description"])
-    print("total", time_entry_total)
-    print("jira", jira_worklog_total)
-    print("shortfall", time_shortfall)
-
     # normalise started timestamps and sort
     for time_entry in time_entries:
         time_entry["start"] = load_timestamp(time_entry["start"])
@@ -146,16 +140,22 @@ for jira_key, time_entries in jira_key_time_entries.items():
         if jira_worklogs:
             jira_worklog = jira_worklogs[-1]
             print(
-                "Updating %s worklog %s to %.1g hrs" % jira_key,
-                jira_worklog.started.strftime("%c"),
-                (jira_worklog.timeSpentSeconds + shortfall) / 3600,
+                "Updating %s worklog %s to %.1g hrs"
+                % (
+                    jira_key,
+                    jira_worklog.started.strftime("%c"),
+                    (jira_worklog.timeSpentSeconds + shortfall) / 3600,
+                )
             )
             jira_worklog.update(timeSpentSeconds=jira_worklog.timeSpentSeconds + shortfall)
         else:
             time_entry = time_entries[-1]
             print(
-                "Creating %s worklog %s to %.1g hrs" % jira_key,
-                time_entry["start"].strftime("%c"),
-                (jira_worklog.timeSpentSeconds + shortfall) / 3600,
+                "Creating %s worklog %s to %.1g hrs"
+                % (
+                    jira_key,
+                    time_entry["start"].strftime("%c"),
+                    (jira_worklog.timeSpentSeconds + shortfall) / 3600,
+                )
             )
             jira.add_worklog(jira_key, timeSpentSeconds=shortfall, started=time_entry["start"])
