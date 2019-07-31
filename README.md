@@ -2,6 +2,8 @@
 
 Log toggl hours against JIRA tickets.
 
+Time entry descriptions must start with a JIRA ticket to be found.
+
 ## Setup
 
 ```shell

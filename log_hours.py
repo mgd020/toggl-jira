@@ -151,11 +151,11 @@ for jira_key, time_entries in jira_key_time_entries.items():
         else:
             time_entry = time_entries[-1]
             print(
-                "Creating %s worklog %s to %.1g hrs"
+                "Creating %s worklog %s of %.1g hrs"
                 % (
                     jira_key,
                     time_entry["start"].strftime("%c"),
-                    (jira_worklog.timeSpentSeconds + shortfall) / 3600,
+                    shortfall / 3600,
                 )
             )
             jira.add_worklog(jira_key, timeSpentSeconds=shortfall, started=time_entry["start"])
