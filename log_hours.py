@@ -158,4 +158,4 @@ for jira_key, time_entries in jira_key_time_entries.items():
                     shortfall / 3600,
                 )
             )
-            jira.add_worklog(jira_key, timeSpentSeconds=shortfall, started=time_entry["start"])
+            jira.add_worklog(jira_key, timeSpentSeconds=shortfall, started=time_entry["start"], comment=input("Comment: ") or None)
