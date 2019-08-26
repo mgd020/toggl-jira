@@ -127,9 +127,12 @@ for jira_key, time_entries in jira_key_time_entries.items():
             shortfall = time_entry_total - jira_worklog_total
             shortfall = math.ceil(shortfall / ROUND_SECONDS_TO) * ROUND_SECONDS_TO
             print(
-                "Updating %s worklog %s to %.1g hrs" % jira_key,
-                jira_worklog.started,
-                (jira_worklog.timeSpentSeconds + shortfall) / 3600,
+                "Updating %s worklog %s to %.1g hrs"
+                % (
+                    jira_key,
+                    jira_worklog.started,
+                    (jira_worklog.timeSpentSeconds + shortfall) / 3600,
+                )
             )
             jira_worklog.update(timeSpentSeconds=jira_worklog.timeSpentSeconds + shortfall)
             jira_worklog_total += shortfall
@@ -143,7 +146,7 @@ for jira_key, time_entries in jira_key_time_entries.items():
                 "Updating %s worklog %s to %.1g hrs"
                 % (
                     jira_key,
-                    jira_worklog.started.strftime("%c"),
+                    jira_worklog.started,
                     (jira_worklog.timeSpentSeconds + shortfall) / 3600,
                 )
             )
@@ -152,10 +155,11 @@ for jira_key, time_entries in jira_key_time_entries.items():
             time_entry = time_entries[-1]
             print(
                 "Creating %s worklog %s of %.1g hrs"
-                % (
-                    jira_key,
-                    time_entry["start"].strftime("%c"),
-                    shortfall / 3600,
-                )
+                % (jira_key, time_entry["start"].strftime("%c"), shortfall / 3600)
             )
-            jira.add_worklog(jira_key, timeSpentSeconds=shortfall, started=time_entry["start"], comment=input("Comment: ") or None)
+            jira.add_worklog(
+                jira_key,
+                timeSpentSeconds=shortfall,
+                started=time_entry["start"],
+                comment=input("Comment: ") or None,
+            )
